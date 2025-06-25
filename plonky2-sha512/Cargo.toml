@@ -12,11 +12,11 @@ edition = "2021"
 #plonky2_u32 = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
 #plonky2_ecdsa = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
 
-plonky2 = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_util ={ git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_field = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_u32 = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_ecdsa ={ git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
+plonky2_util ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
+plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
+plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
+plonky2_ecdsa ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
 
 itertools = "0.10.0"
 rayon = "1.5.1"
