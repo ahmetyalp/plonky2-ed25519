@@ -6,13 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-plonky2 = { git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_util = { git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_field = { git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_u32 = { git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_ecdsa = { git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_sha512 ={ git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
-plonky2_cuda   = { git = "https://https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2 = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2_util = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2_field = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2_u32 = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2_ecdsa = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
+plonky2_sha512 = { path = "./plonky2-sha512" }
+plonky2_cuda   = { git = "https://github.com/sideprotocol/plonky2-gpu.git", rev = "91ab6219098a4d9c851822cd6ca04beb4e389a5b" }
 #curve25519-dalek = { path = "../curve25519-dalek", features = ["default"] }
 rustacuda = "0.1.3"
 rustacuda_core = "0.1.2"
