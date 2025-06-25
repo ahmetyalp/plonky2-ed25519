@@ -6,13 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
-plonky2_util = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
-plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
-plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
-plonky2_ecdsa = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
+plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "94e593587bbc88c6a714ffc586ce3c11dd25a11a" }
+plonky2_util = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "94e593587bbc88c6a714ffc586ce3c11dd25a11a" }
+plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "94e593587bbc88c6a714ffc586ce3c11dd25a11a" }
+plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "94e593587bbc88c6a714ffc586ce3c11dd25a11a" }
+plonky2_ecdsa = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "94e593587bbc88c6a714ffc586ce3c11dd25a11a" }
 plonky2_sha512 = { path = "./plonky2-sha512" }
-plonky2_cuda   = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "c2be165fce369e7dd866ab1e5e23d17a12002e00" }
+plonky2_cuda   = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "94e593587bbc88c6a714ffc586ce3c11dd25a11a" }
 #curve25519-dalek = { path = "../curve25519-dalek", features = ["default"] }
 rustacuda = "0.1.3"
 rustacuda_core = "0.1.2"
