@@ -5,18 +5,16 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
-#plonky2 = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
-#plonky2_util = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
-#plonky2_field = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
-#plonky2_u32 = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
-#plonky2_ecdsa = { git = "https://github.com/polymerdao/plonky2", rev = "4cb0b48df1d227d5461a4c28ed025aaea64e2e62" }
+[features]
+default = []
+cuda = ["plonky2/cuda", "plonky2_field/cuda"]
 
-plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "d13a27162a8ff36f5ba574f5fdbaaf1f7b5c6093" }
-plonky2_util ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "d13a27162a8ff36f5ba574f5fdbaaf1f7b5c6093" }
-plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "d13a27162a8ff36f5ba574f5fdbaaf1f7b5c6093" }
-plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "d13a27162a8ff36f5ba574f5fdbaaf1f7b5c6093" }
-plonky2_ecdsa ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "d13a27162a8ff36f5ba574f5fdbaaf1f7b5c6093" }
+[dependencies]
+plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "cd0cd840bf60c45591efc98828dc68792b02e4a0" }
+plonky2_util ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "cd0cd840bf60c45591efc98828dc68792b02e4a0" }
+plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "cd0cd840bf60c45591efc98828dc68792b02e4a0" }
+plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "cd0cd840bf60c45591efc98828dc68792b02e4a0" }
+plonky2_ecdsa ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "cd0cd840bf60c45591efc98828dc68792b02e4a0" }
 
 itertools = "0.10.0"
 rayon = "1.5.1"
