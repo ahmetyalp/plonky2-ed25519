@@ -289,7 +289,7 @@ where
         println!("gate: {}", gate.0.id());
     }
 
-    let mut timing = TimingTree::new("prove", Level::Debug);
+    let mut timing = TimingTree::new("prove gpu", Level::Debug);
     println!("num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
              data.common.num_gate_constraints, data.common.num_constants,
             data.common.selectors_info,
@@ -297,7 +297,7 @@ where
     let proof = my_prove(
         &data.prover_only,
         &data.common,
-        pw,
+        pw.clone(),
         &mut timing,
         &mut ctx,
     )?;
@@ -311,6 +311,21 @@ where
     let mut file = File::create("ed25519.proof")?;
     file.write_all(&*proof_bytes)
         .expect("Leaf proof file write err");
+
+    let mut timing = TimingTree::new("prove cpu", Level::Debug);
+    println!("num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
+             data.common.num_gate_constraints, data.common.num_constants,
+            data.common.selectors_info,
+    );
+    let proof = prove(
+        &data.prover_only,
+        &data.common,
+        pw,
+        &mut timing,
+    )?;
+    data.verify(proof.clone()).expect("verify error");
+
+    timing.print();
 
     Ok((proof, data.verifier_only, data.common))
 }
@@ -571,46 +586,46 @@ fn main() -> Result<()> {
 
         return Ok(());
 
-        // TODO: remove this double recursion will cause leaf proving error, why?
-        let standard_config = CircuitConfig::standard_recursion_config();
-        let (inner_proof, inner_vd, inner_cd) =
-            recursive_proof::<F, C, C, D>(&eddsa_proof, None, &standard_config, None)?;
-        println!("Num public inputs: {}", inner_cd.num_public_inputs);
+        // // TODO: remove this double recursion will cause leaf proving error, why?
+        // let standard_config = CircuitConfig::standard_recursion_config();
+        // let (inner_proof, inner_vd, inner_cd) =
+        //     recursive_proof::<F, C, C, D>(&eddsa_proof, None, &standard_config, None)?;
+        // println!("Num public inputs: {}", inner_cd.num_public_inputs);
 
-        // recursively prove in a leaf
-        let mut common_data = common_data_for_recursion::<GoldilocksField, C, D>();
-        let mut builder = CircuitBuilder::<F, D>::new(standard_config.clone());
-        let leaf_targets = builder.tree_recursion_leaf::<C>(inner_cd, &mut common_data)?;
-        let data = builder.build::<C>();
-        let leaf_vd = &data.verifier_only;
-        let mut pw = PartialWitness::new();
-        let leaf_data = TreeRecursionLeafData {
-            inner_proof: &inner_proof,
-            inner_verifier_data: &inner_vd,
-            verifier_data: leaf_vd,
-        };
-        set_tree_recursion_leaf_data_target(&mut pw, &leaf_targets, &leaf_data)?;
-        let leaf_proof = data.prove(pw)?;
-        check_tree_proof_verifier_data(&leaf_proof, leaf_vd, &common_data)
-            .expect("Leaf public inputs do not match its verifier data");
-        data.verify(leaf_proof.clone()).expect("verify error");
-        println!("Num public inputs: {}", common_data.num_public_inputs);
+        // // recursively prove in a leaf
+        // let mut common_data = common_data_for_recursion::<GoldilocksField, C, D>();
+        // let mut builder = CircuitBuilder::<F, D>::new(standard_config.clone());
+        // let leaf_targets = builder.tree_recursion_leaf::<C>(inner_cd, &mut common_data)?;
+        // let data = builder.build::<C>();
+        // let leaf_vd = &data.verifier_only;
+        // let mut pw = PartialWitness::new();
+        // let leaf_data = TreeRecursionLeafData {
+        //     inner_proof: &inner_proof,
+        //     inner_verifier_data: &inner_vd,
+        //     verifier_data: leaf_vd,
+        // };
+        // set_tree_recursion_leaf_data_target(&mut pw, &leaf_targets, &leaf_data)?;
+        // let leaf_proof = data.prove(pw)?;
+        // check_tree_proof_verifier_data(&leaf_proof, leaf_vd, &common_data)
+        //     .expect("Leaf public inputs do not match its verifier data");
+        // data.verify(leaf_proof.clone()).expect("verify error");
+        // println!("Num public inputs: {}", common_data.num_public_inputs);
 
-        let proof_bytes = leaf_proof.to_bytes();
-        info!("Export proof: {} bytes", proof_bytes.len());
+        // let proof_bytes = leaf_proof.to_bytes();
+        // info!("Export proof: {} bytes", proof_bytes.len());
 
-        println!(
-            "Exporting root proof: {}",
-            args.output_path
-                .clone()
-                .into_os_string()
-                .into_string()
-                .unwrap()
-        );
-        let mut file = File::create(args.output_path)?;
-        file.write_all(&*proof_bytes)
-            .expect("Leaf proof file write err");
+        // println!(
+        //     "Exporting root proof: {}",
+        //     args.output_path
+        //         .clone()
+        //         .into_os_string()
+        //         .into_string()
+        //         .unwrap()
+        // );
+        // let mut file = File::create(args.output_path)?;
+        // file.write_all(&*proof_bytes)
+        //     .expect("Leaf proof file write err");
 
-        Ok(())
+        // Ok(())
     }
 }
