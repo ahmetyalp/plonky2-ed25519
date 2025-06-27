@@ -36,6 +36,15 @@ use plonky2_field::fft::fft_root_table;
 use plonky2_field::zero_poly_coset::ZeroPolyOnCoset;
 use plonky2_util::{log2_ceil, log2_strict};
 
+use tokio::signal::unix::{signal, SignalKind};
+use tokio::sync::mpsc::{self, Sender, UnboundedReceiver};
+use tokio::sync::Notify;
+use tokio::time::{sleep, timeout, Duration};
+
+use jemallocator::Jemalloc;
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
+
 #[cfg(feature = "cuda")]
 use plonky2::plonk::prover::my_prove;
 
@@ -72,7 +81,7 @@ fn prove_ed25519_cuda<
     msg: &[u8],
     sigv: &[u8],
     pkv: &[u8],
-) -> Result<ProofTuple<F, C, D>>
+)
 where
     [(); C::Hasher::HASH_SIZE]:,
 {
@@ -295,36 +304,47 @@ where
         };
     }
 
-    let mut timing = TimingTree::new("prove gpu", Level::Debug);
-    println!(
-        "num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
-        data.common.num_gate_constraints, data.common.num_constants, data.common.selectors_info,
-    );
-    let proof = my_prove(
-        &data.prover_only,
-        &data.common,
-        pw.clone(),
-        &mut timing,
-        &mut ctx,
-    )?;
+    tokio::task::spawn_blocking(move || loop {
+        let mut timing = TimingTree::new("prove gpu", Level::Debug);
+        println!(
+            "num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
+            data.common.num_gate_constraints, data.common.num_constants, data.common.selectors_info,
+        );
+        let proof = my_prove(
+            &data.prover_only,
+            &data.common,
+            pw.clone(),
+            &mut timing,
+            &mut ctx,
+        )?;
 
-    timing.print();
+        timing.print();
 
-    let timing = TimingTree::new("verify", Level::Info);
-    data.verify(proof.clone()).expect("verify error");
-    timing.print();
+        let timing = TimingTree::new("verify", Level::Info);
+        data.verify(proof.clone()).expect("verify error");
+        timing.print();
+    });
 
-    let mut timing = TimingTree::new("prove cpu", Level::Debug);
-    println!(
-        "num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
-        data.common.num_gate_constraints, data.common.num_constants, data.common.selectors_info,
-    );
-    let proof = prove(&data.prover_only, &data.common, pw, &mut timing)?;
-    data.verify(proof.clone()).expect("verify error");
+    tokio::task::spawn_blocking(move || loop {
+        let mut timing = TimingTree::new("prove gpu", Level::Debug);
+        println!(
+            "num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
+            data.common.num_gate_constraints, data.common.num_constants, data.common.selectors_info,
+        );
+        let proof = my_prove(
+            &data.prover_only,
+            &data.common,
+            pw.clone(),
+            &mut timing,
+            &mut ctx,
+        )?;
 
-    timing.print();
+        timing.print();
 
-    Ok((proof, data.verifier_only, data.common))
+        let timing = TimingTree::new("verify", Level::Info);
+        data.verify(proof.clone()).expect("verify error");
+        timing.print();
+    });
 }
 
 fn prove_ed25519<F: RichField + Extendable<D>, C: GenericConfig<D, F = F>, const D: usize>(
@@ -446,22 +466,20 @@ fn main() -> Result<()> {
 
     #[cfg(feature = "cuda")]
     {
-        let eddsa_proof = prove_ed25519_cuda::<F, C, D>(
+        prove_ed25519_cuda::<F, C, D>(
             decode_hex(&args.msg.unwrap())?.as_slice(),
             decode_hex(&args.sig.unwrap())?.as_slice(),
             decode_hex(&args.pk.unwrap())?.as_slice(),
         )?;
-        println!("Num public inputs: {}", eddsa_proof.2.num_public_inputs);
     }
 
     #[cfg(not(feature = "cuda"))]
     {
-        let eddsa_proof = prove_ed25519::<F, C, D>(
+        prove_ed25519::<F, C, D>(
             decode_hex(&args.msg.unwrap())?.as_slice(),
             decode_hex(&args.sig.unwrap())?.as_slice(),
             decode_hex(&args.pk.unwrap())?.as_slice(),
         )?;
-        println!("Num public inputs: {}", eddsa_proof.2.num_public_inputs);
     }
     return Ok(());
 }
