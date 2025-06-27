@@ -314,16 +314,6 @@ where
     data.verify(proof.clone()).expect("verify error");
     timing.print();
 
-    let mut timing = TimingTree::new("prove cpu", Level::Debug);
-    println!(
-        "num_gate_constraints: {}, num_constraints: {}, selectors_info: {:?}",
-        data.common.num_gate_constraints, data.common.num_constants, data.common.selectors_info,
-    );
-    let proof = prove(&data.prover_only, &data.common, pw, &mut timing)?;
-    data.verify(proof.clone()).expect("verify error");
-
-    timing.print();
-
     Ok((proof, data.verifier_only, data.common))
 }
 
