@@ -81,7 +81,7 @@ fn prove_ed25519_cuda<
     msg: &[u8],
     sigv: &[u8],
     pkv: &[u8],
-)
+) -> Result<()>
 where
     [(); C::Hasher::HASH_SIZE]:,
 {
@@ -345,6 +345,8 @@ where
         data.verify(proof.clone()).expect("verify error");
         timing.print();
     });
+
+    Ok(())
 }
 
 fn prove_ed25519<F: RichField + Extendable<D>, C: GenericConfig<D, F = F>, const D: usize>(
