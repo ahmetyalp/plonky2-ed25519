@@ -364,8 +364,6 @@ where
 
 #[derive(Parser)]
 struct Cli {
-    #[arg(short, long, default_value = "./ed25519.proof")]
-    output_path: PathBuf,
     #[arg(short, long)]
     msg: Option<String>,
     #[arg(short, long)]
