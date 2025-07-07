@@ -10,11 +10,11 @@ default = []
 cuda = ["plonky2/cuda", "plonky2_field/cuda"]
 
 [dependencies]
-plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "6db129b9b81a45d9c863c57d5516142df8f46439" }
-plonky2_util ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "6db129b9b81a45d9c863c57d5516142df8f46439" }
-plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "6db129b9b81a45d9c863c57d5516142df8f46439" }
-plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "6db129b9b81a45d9c863c57d5516142df8f46439" }
-plonky2_ecdsa ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", rev = "6db129b9b81a45d9c863c57d5516142df8f46439" }
+plonky2 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", branch = "main" }
+plonky2_util ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", branch = "main" }
+plonky2_field = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", branch = "main" }
+plonky2_u32 = { git = "https://github.com/ahmetyalp/plonky2-gpu.git", branch = "main" }
+plonky2_ecdsa ={ git = "https://github.com/ahmetyalp/plonky2-gpu.git", branch = "main" }
 
 itertools = "0.10.0"
 rayon = "1.5.1"
